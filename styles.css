@@ -1,0 +1,25 @@
+body{
+    display: flex;
+    justify-content: center;
+}
+
+#calcDiv{
+    display: flex;
+    max-width: 250px;
+    height: 270px;
+    justify-content: flex-end;
+    align-items: center;
+    flex-wrap: wrap;
+    
+
+}
+
+button{
+    display: flex;
+    min-height: 50px;
+    min-width: 50px;
+    margin: 5px;
+    justify-content: center;
+    align-items: center;
+}
+
