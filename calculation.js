@@ -7,7 +7,7 @@ let btns = document.querySelectorAll(".number");
 //A function that takes an operator, two numbers and evaluates them
 function operate(firstNumber, secondNumber, operator){
     let sum=`${firstNumber}${operator}${secondNumber}`;
-    return eval(sum).toFixed(8);
+    return eval(sum);
 }
 
 //A function that lets the user put the number on the display using numeric buttons
@@ -57,6 +57,7 @@ function typeing(){
             }else {
                 checkIfExist(2,number)
             }   
+            console.log(mathArray);
 
             display.textContent ="";
 
@@ -74,7 +75,11 @@ function typeing(){
                     o=mathArray[1];
                     sn=mathArray[2];      
                     display.textContent = operate(fn,sn,o);  
-                }         
+                }else if(op.id==="del"){
+                    display.textContent ="";
+                    let clearedArray = mathArray.splice(0,0);
+                    mathArray = clearedArray;                  
+                }     
             }
         })
     })
