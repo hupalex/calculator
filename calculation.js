@@ -2,24 +2,30 @@ let mathArray = [];
 let displayValue;
 let display = document.querySelector("#display #dispContent");
 let btns = document.querySelectorAll(".number");
+let sum=0;
 
 
 //A function that takes an operator, two numbers and evaluates them
 function operate(firstNumber, secondNumber, operator){
     let sum=`${firstNumber}${operator}${secondNumber}`;
-    return eval(sum);
+    if(operator==="/" && secondNumber === 0){
+        clearArray(); 
+        alert("How dare you?!");
+    }else return eval(sum);
+    
 }
 
 //A function that lets the user put the number on the display using numeric buttons
 function getNumber(){
     btns.forEach((btn) =>{
-        btn.addEventListener("click", () =>{         
-            display.textContent += btn.textContent;
-            displayValue = Array(display.textContent);
-            for(var i = 0; i < displayValue.length; ++i)
-            displayValue[i] = displayValue[i].replace(/(\r\n|\n|\r|\s)/gm,"")
-            displayValue = Number(displayValue);
-            number = displayValue;
+        btn.addEventListener("click", () =>{      
+                display.textContent += btn.textContent;
+                displayValue = Array(display.textContent);
+                for(var i = 0; i < displayValue.length; ++i)
+                displayValue[i] = displayValue[i].replace(/(\r\n|\n|\r|\s)/gm,"")
+                displayValue = Number(displayValue);
+                number = displayValue;
+
         })
     })
 }
@@ -51,7 +57,8 @@ function typeing(){
 
     getNumber();
     ops.forEach((op) =>{
-        op.addEventListener("click", () =>{       
+        op.addEventListener("click", () =>{    
+              
             if(!mathArray.length){
                 mathArray.push(number);
             }else {
@@ -70,22 +77,30 @@ function typeing(){
                     checkAndOperate(op.id);
                 }else if(op.id==="/"){
                     checkAndOperate(op.id);
-                }else if(op.id ==="="){
+                    
+                }else if(op.id==="="){
                     fn=mathArray[0];
                     o=mathArray[1];
                     sn=mathArray[2];      
-                    display.textContent = operate(fn,sn,o);  
+                    display.textContent = operate(fn,sn,o);
+                    sum = display.textContent
+                    
+                    
                 }else if(op.id==="del"){
-                    display.textContent ="";
-                    let clearedArray = mathArray.splice(0,0);
-                    mathArray = clearedArray;                  
+                    clearArray();                 
                 }     
             }
+            
         })
     })
 
 }
 
+function clearArray(){
+    display.textContent ="";
+    let clearedArray = mathArray.splice(0,0);
+    mathArray = clearedArray; 
+}
 
 typeing();
 
