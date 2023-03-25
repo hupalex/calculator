@@ -30,6 +30,7 @@ body{
     align-items: center;
     font-weight: bold;
     color: black;
+    border-radius: 5px;
      
 }
 
@@ -46,5 +47,9 @@ button{
     align-items: center;
     border-radius:30px;
     border: 1px solid rgb(54, 54, 54);
+}
+
+button:hover{
+    background-color: rgb(201, 201, 201);
 }
 
