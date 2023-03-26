@@ -3,6 +3,8 @@ let displayValue;
 let display = document.querySelector("#display #dispContent");
 let btns = document.querySelectorAll(".number");
 let sum=0;
+let equalIsClicked = false;
+let functionIsClicked= false;
 
 
 //A function that takes an operator, two numbers and evaluates them
@@ -15,18 +17,42 @@ function operate(firstNumber, secondNumber, operator){
     
 }
 
+function writeNumberWithoutClearing(element){
+    display.textContent += element.textContent;
+    displayValue = Array(display.textContent);
+    for(var i = 0; i < displayValue.length; ++i)
+    displayValue[i] = displayValue[i].replace(/(\r\n|\n|\r|\s)/gm,"")
+    displayValue = Number(displayValue);
+    number = displayValue;  
+}
+
+function writeNumberWithClearing(element){
+    clearArray();
+    equalIsClicked = false;
+    functionIsClicked = true;
+    display.textContent += element.textContent;
+    displayValue = Array(display.textContent);
+    for(var i = 0; i < displayValue.length; ++i)
+    displayValue[i] = displayValue[i].replace(/(\r\n|\n|\r|\s)/gm,"")
+    displayValue = Number(displayValue);
+    number = displayValue;
+}
+
 //A function that lets the user put the number on the display using numeric buttons
 function getNumber(){
     btns.forEach((btn) =>{
-        btn.addEventListener("click", () =>{      
-                display.textContent += btn.textContent;
-                displayValue = Array(display.textContent);
-                for(var i = 0; i < displayValue.length; ++i)
-                displayValue[i] = displayValue[i].replace(/(\r\n|\n|\r|\s)/gm,"")
-                displayValue = Number(displayValue);
-                number = displayValue;
-
-        })
+        btn.addEventListener("click", () =>{     
+            if(equalIsClicked === false){
+                    writeNumberWithoutClearing(btn)
+            } else if(equalIsClicked === true){
+                if(functionIsClicked === false){
+                    writeNumberWithClearing(btn);  
+                }else{
+                    writeNumberWithoutClearing(btn);
+                }
+                
+            }
+        })     
     })
 }
 
@@ -51,11 +77,8 @@ function checkAndOperate(id){
     }
 }
 
-
-function typeing(){
+function getCalcFunction(){
     let ops = document.querySelectorAll(".operators");
-
-    getNumber();
     ops.forEach((op) =>{
         op.addEventListener("click", () =>{    
               
@@ -71,12 +94,16 @@ function typeing(){
             if(mathArray[0]){
                 if(op.id==="+"){
                    checkAndOperate(op.id);
+                   functionIsClicked = true;
                 }else if(op.id==="-"){
                     checkAndOperate(op.id);
+                    functionIsClicked = true;
                 }else if(op.id==="*"){
                     checkAndOperate(op.id);
+                    functionIsClicked = true;
                 }else if(op.id==="/"){
                     checkAndOperate(op.id);
+                    functionIsClicked = true;
                     
                 }else if(op.id==="="){
                     fn=mathArray[0];
@@ -84,8 +111,9 @@ function typeing(){
                     sn=mathArray[2];      
                     display.textContent = operate(fn,sn,o);
                     sum = display.textContent
-                    
-                    
+                    equalIsClicked = true;
+                    functionIsClicked = false;
+     
                 }else if(op.id==="del"){
                     clearArray();                 
                 }     
@@ -93,6 +121,10 @@ function typeing(){
             
         })
     })
+}
+function typeing(){
+    getNumber();
+    getCalcFunction();
 
 }
 
